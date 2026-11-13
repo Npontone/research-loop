@@ -3,5 +3,17 @@
   "version": "0.1.0",
   "description": "Autonomous, falsification-first research loop for Claude Code: audit the data, pre-register tests, beat a baseline, attack every positive result with an independent skeptic agent, and log everything, nulls included.",
   "license": "MIT",
-  "keywords": ["research", "data-analysis", "science", "pre-registration", "reproducibility"]
+  "keywords": [
+    "research",
+    "data-analysis",
+    "science",
+    "pre-registration",
+    "reproducibility"
+  ],
+  "author": {
+    "name": "Nicholas Pontone",
+    "url": "https://github.com/Npontone"
+  },
+  "homepage": "https://github.com/Npontone/research-loop",
+  "repository": "https://github.com/Npontone/research-loop"
 }

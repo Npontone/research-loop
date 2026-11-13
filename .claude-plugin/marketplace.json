@@ -1,11 +1,19 @@
 {
   "name": "research-loop",
-  "owner": { "name": "Nicholas Pontone", "url": "https://github.com/Npontone" },
+  "owner": {
+    "name": "Nicholas Pontone",
+    "url": "https://github.com/Npontone"
+  },
   "plugins": [
     {
       "name": "research-loop",
       "source": "./",
-      "description": "Autonomous, falsification-first research loop with a skeptic reviewer agent."
+      "description": "Autonomous, falsification-first research loop with a skeptic reviewer agent.",
+      "author": {
+        "name": "Nicholas Pontone",
+        "url": "https://github.com/Npontone"
+      }
     }
-  ]
+  ],
+  "description": "Falsification-first research workflow for Claude Code."
 }
