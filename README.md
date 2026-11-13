@@ -35,6 +35,7 @@ have a defect that invalidated a naive analysis. The method itself is domain-agn
 skills/research-loop/    SKILL.md (the method) and templates/study/ (the study scaffold)
 agents/skeptic.md        independent hostile reviewer subagent
 hooks/                   SessionStart(compact) hook that restores study state
+scripts/run-study.sh     runs a study unattended as a chain of fresh sessions
 ```
 
 The scaffold each study gets:
@@ -77,6 +78,30 @@ Ask for research in plain words, or invoke it directly:
 ```
 
 To resume, start a new session and say "resume the study in studies/2026-11-13-foo".
+
+### Unattended: a chain of fresh sessions
+
+Long sessions degrade (context rot). `scripts/run-study.sh` runs a study as a chain of short
+headless `claude -p` sessions. Each pass resumes from the study files, runs at most **one**
+experiment, writes the report and `Next`, commits, and exits. The next pass starts with
+a clean context. The chain stops when:
+
+- `Next` says `STATUS: STOP` or `STATUS: BLOCKED`, or
+- a pass makes no commit (it's stuck, so it isn't repeated), or
+- it reaches `max-passes`.
+
+```bash
+# from your project root (bash, or Git Bash on Windows); the study needs one commit first
+path/to/run-study.sh studies/2026-11-13-foo 6 5     # up to 6 passes, max $5 each
+nohup path/to/run-study.sh studies/2026-11-13-foo > run.log 2>&1 &   # detached
+```
+
+Per-pass JSON logs go to `<study>/outputs/_sessions/`, which is gitignored. Set
+`PROJECT_DIR` to launch from somewhere other than the current directory. Set
+`PERMISSION_MODE` to change the `--permission-mode` (default `auto`). Unattended passes
+can't answer approval prompts, so choose a mode you're comfortable leaving alone with
+your files. A plugin install puts the script in the plugin cache, so for regular use
+copy it somewhere handy.
 
 ## Adapting it to your project
 
