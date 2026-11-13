@@ -9,7 +9,7 @@ It was built for environmental remote-sensing research, where datasets have defe
 ## What it makes Claude do
 
 1. **Brief.** Turn a vague direction into a concrete, testable question (`BRIEF.md`).
-2. **Audit the data first.** Check units, values, time zones, CRS, sample structure
+2. **Audit the data first.** Check units, sentinel values, time zones, CRS, sample structure
    and gap-filling artifacts before any modelling. A defect found here counts as a result.
 3. **Pre-register.** Write the hypothesis, metric, baseline, controls and falsification
    criterion before running each experiment. Every test goes into a ledger (`tests.csv`),
