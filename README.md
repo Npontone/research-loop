@@ -94,6 +94,13 @@ path/to/run-study.sh studies/2026-11-13-foo 6 5     # up to 6 passes, max $5 eac
 nohup path/to/run-study.sh studies/2026-11-13-foo > run.log 2>&1 &   # detached
 ```
 
+The script expects a study that already exists. It must have:
+- a RESEARCH_LOG.md
+- at least one git commit
+
+The easiest way to get there is to run the first session interactively: give Claude the direction and let it set up the study and write BRIEF.md. Ideally it also does the data audit (E0). Check the brief, because every later pass works from it. Then hand the study over to the script.
+
+
 Per-pass JSON logs go to `<study>/outputs/_sessions/`, which is gitignored. Set
 `PROJECT_DIR` to launch from somewhere other than the current directory. Set
 `PERMISSION_MODE` to change the `--permission-mode` (default `auto`). Unattended passes
