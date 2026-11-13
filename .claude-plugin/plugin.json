@@ -1,0 +1,7 @@
+{
+  "name": "research-loop",
+  "version": "0.1.0",
+  "description": "Autonomous, falsification-first research loop for Claude Code: audit the data, pre-register tests, beat a baseline, attack every positive result with an independent skeptic agent, and log everything, nulls included.",
+  "license": "MIT",
+  "keywords": ["research", "data-analysis", "science", "pre-registration", "reproducibility"]
+}

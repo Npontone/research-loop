@@ -1,0 +1,11 @@
+outputs/**/*.tif
+outputs/**/*.h5
+outputs/**/*.nc
+outputs/**/*.zarr
+data/
+*.las
+*.laz
+__pycache__/
+.ipynb_checkpoints/
+!**/.gitkeep
+outputs/_sessions/
