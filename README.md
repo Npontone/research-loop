@@ -4,8 +4,7 @@ A Claude Code plugin for running data analysis autonomously. You give Claude a d
 "explore this dataset"). It designs and runs the study itself, and it leaves an audit trail a
 skeptical reviewer can follow.
 
-It was built for environmental remote-sensing research, where every dataset turned out to
-have a defect that invalidated a naive analysis. The method itself is domain-agnostic.
+It was built for environmental remote-sensing research, where datasets have defects that can invalidate a naive analysis. The method itself is domain-agnostic.
 
 ## What it makes Claude do
 
