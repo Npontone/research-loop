@@ -1,9 +1,8 @@
 # research-loop
 
-A Claude Code plugin for running data analysis as **autonomous, falsification-first
-research**. You give Claude a direction ("does X explain Y?", "validate this product",
+A Claude Code plugin for running data analysis autonomously. You give Claude a direction ("does X explain Y?", "validate this product",
 "explore this dataset"). It designs and runs the study itself, and it leaves an audit trail a
-sceptical reviewer can follow.
+skeptical reviewer can follow.
 
 It was built for environmental remote-sensing research, where every dataset turned out to
 have a defect that invalidated a naive analysis. The method itself is domain-agnostic.
@@ -11,10 +10,10 @@ have a defect that invalidated a naive analysis. The method itself is domain-agn
 ## What it makes Claude do
 
 1. **Brief.** Turn a vague direction into a concrete, testable question (`BRIEF.md`).
-2. **Audit the data first.** Check units, sentinel values, time zones, CRS, sample structure
-   and gap-filling artefacts before any modelling. A defect found here counts as a result.
+2. **Audit the data first.** Check units, values, time zones, CRS, sample structure
+   and gap-filling artifacts before any modelling. A defect found here counts as a result.
 3. **Pre-register.** Write the hypothesis, metric, baseline, controls and falsification
-   criterion *before* running each experiment. Every test goes into a ledger (`tests.csv`),
+   criterion before running each experiment. Every test goes into a ledger (`tests.csv`),
    so the number of tests tried is always known.
 4. **Beat a trivial baseline** (climatology, group mean, persistence) and a permutation
    null, using holdouts that respect structure (leave-one-site/subject/year-out) and
@@ -26,7 +25,7 @@ have a defect that invalidated a naive analysis. The method itself is domain-agn
    nulls, data defects, caveats, what's blocked on you) and commit.
 7. **Keep sessions short.** The files are the memory. Each session ends with a `Next`
    section a cold session can resume from. After auto-compaction, a hook re-injects the
-   study state verbatim.
+   study state.
 
 ## Contents
 
@@ -107,7 +106,7 @@ copy it somewhere handy.
 
 Put your project's specifics in the project's `CLAUDE.md`, which the skill and the skeptic
 both defer to: where studies go, which Python/R environment to use, the known defects in
-your data, the confounds that matter in your field, and compute limits. The skill's
+your data, the confounds that matter in your field, and compute limits. The skills
 defaults are generic.
 
 ## License
