@@ -17,7 +17,9 @@ STATUS: CONTINUE
 ### E0 — Data audit  (pre-registered YYYY-MM-DD HH:MM)
 Hypothesis: the data are usable as-is.
 Test / metric:
+Method: (script; checks run, with package + function)
 Baseline(s): n/a
 Controls: n/a
 Would be falsified by: any defect that changes downstream analysis.
 **Result:**
+Method as run:

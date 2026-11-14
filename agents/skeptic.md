@@ -39,7 +39,11 @@ Go through these, prioritising the ones most likely to break *this* claim:
    temporal autocorrelation leakage, class imbalance, selection effects.
 7. **Mechanism.** Is the sign and size physically or mechanistically plausible? Does an
    implausibly large effect point to a processing artifact?
-8. **Overreach.** Does the wording in FINDINGS.md claim more than the evidence supports
+8. **Method reproducibility.** Could you re-implement the claim from `METHODS.md` alone?
+   Check it against the script: package and function, non-default settings, defaults that
+   matter (e.g. an unstated penalty), the CV folds, the seed, filters and the n after each.
+   An unstated or misdescribed setting that changes the number is at least major.
+9. **Overreach.** Does the wording in FINDINGS.md claim more than the evidence supports
    ("predicts" vs "correlates", "where" vs "that", "result" vs "lead")?
 
 ## Running checks

@@ -12,7 +12,8 @@ It was built for environmental remote-sensing research, where datasets have defe
 2. **Audit the data first.** Check units, sentinel values, time zones, CRS, sample structure
    and gap-filling artifacts before any modelling. A defect found here counts as a result.
 3. **Pre-register.** Write the hypothesis, metric, baseline, controls and falsification
-   criterion before running each experiment. Every test goes into a ledger (`tests.csv`),
+   criterion before running each experiment, plus the exact method (model, package and
+   function, settings, seed). Every test goes into a ledger (`tests.csv`),
    so the number of tests tried is always known.
 4. **Beat a trivial baseline** (climatology, group mean, persistence) and a permutation
    null, using holdouts that respect structure (leave-one-site/subject/year-out) and
@@ -43,6 +44,7 @@ studies/<YYYY-MM-DD>-<slug>/   (its own git repo)
   BRIEF.md          question, data, budget, assumptions
   RESEARCH_LOG.md   Next (rewritten each session) + append-only pre-registered entries
   FINDINGS.md       answer, results, leads, nulls, data defects, caveats, blocked-on-you
+  METHODS.md        paper-style methods: packages, versions, settings, seeds
   tests.csv         ledger of every test tried
   scripts/  outputs/  data/
 ```
