@@ -44,7 +44,7 @@ def main() -> None:
     w(f"# Context was compacted. Active research-loop study: {study}\n")
     w("Below is the study state, taken verbatim from its files. Trust these over the "
       "compaction summary. Per the research-loop session budget, finish the current step, "
-      "write the section 5 report with STATUS: CONTINUE, commit, and end the session.\n\n")
+      "write the section 6 report with STATUS: CONTINUE, commit, and end the session.\n\n")
 
     w("## BRIEF.md\n" + read(study / "BRIEF.md").strip() + "\n\n")
     w("## RESEARCH_LOG.md -> Next\n" + next_section(read(study / "RESEARCH_LOG.md")) + "\n\n")

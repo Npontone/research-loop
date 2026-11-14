@@ -43,7 +43,12 @@ Go through these, prioritising the ones most likely to break *this* claim:
    Check it against the script: package and function, non-default settings, defaults that
    matter (e.g. an unstated penalty), the CV folds, the seed, filters and the n after each.
    An unstated or misdescribed setting that changes the number is at least major.
-9. **Overreach.** Does the wording in FINDINGS.md claim more than the evidence supports
+9. **Precedent.** Read `LITERATURE.md`, if it exists. Does the method ignore a pitfall
+   or confound listed there? Does it depart from the standard approach without a stated
+   reason, or without being tested against the literature baseline? Is the effect far
+   outside the reported range with no explanation? A departure with a reason is fine.
+   One with no reason, or one that loses to the standard method, is an objection.
+10. **Overreach.** Does the wording in FINDINGS.md claim more than the evidence supports
    ("predicts" vs "correlates", "where" vs "that", "result" vs "lead")?
 
 ## Running checks

@@ -9,21 +9,25 @@ It was built for environmental remote-sensing research, where datasets have defe
 ## What it makes Claude do
 
 1. **Brief.** Turn a vague direction into a concrete, testable question (`BRIEF.md`).
-2. **Audit the data first.** Check units, sentinel values, time zones, CRS, sample structure
+2. **Scan the literature.** A quick, surface-level search (5–15 sources) so methods have a
+   visible lineage (`LITERATURE.md`). It informs but doesn't bind: departing from the
+   standard method is allowed with a stated reason, and the standard method becomes a
+   baseline to beat. Only sources actually retrieved can be cited.
+3. **Audit the data first.** Check units, sentinel values, time zones, CRS, sample structure
    and gap-filling artifacts before any modelling. A defect found here counts as a result.
-3. **Pre-register.** Write the hypothesis, metric, baseline, controls and falsification
+4. **Pre-register.** Write the hypothesis, metric, baseline, controls and falsification
    criterion before running each experiment, plus the exact method (model, package and
    function, settings, seed). Every test goes into a ledger (`tests.csv`),
    so the number of tests tried is always known.
-4. **Beat a trivial baseline** (climatology, group mean, persistence) and a permutation
+5. **Beat a trivial baseline** (climatology, group mean, persistence) and a permutation
    null, using holdouts that respect structure (leave-one-site/subject/year-out) and
    reporting effective n.
-5. **Try to break every positive result.** Robustness variants, drop-one-unit checks, and an
+6. **Try to break every positive result.** Robustness variants, drop-one-unit checks, and an
    independent **`skeptic` subagent** that reads only the files, never the conversation, and
    returns a verdict. A claim it doesn't clear stays a *lead*.
-6. **Log everything, nulls included.** Report in `FINDINGS.md` (answer, results, leads,
+7. **Log everything, nulls included.** Report in `FINDINGS.md` (answer, results, leads,
    nulls, data defects, caveats, what's blocked on you) and commit.
-7. **Keep sessions short.** The files are the memory. Each session ends with a `Next`
+8. **Keep sessions short.** The files are the memory. Each session ends with a `Next`
    section a cold session can resume from. After auto-compaction, a hook re-injects the
    study state.
 
@@ -45,6 +49,7 @@ studies/<YYYY-MM-DD>-<slug>/   (its own git repo)
   RESEARCH_LOG.md   Next (rewritten each session) + append-only pre-registered entries
   FINDINGS.md       answer, results, leads, nulls, data defects, caveats, blocked-on-you
   METHODS.md        paper-style methods: packages, versions, settings, seeds
+  LITERATURE.md     preliminary literature scan: precedent, pitfalls, departures
   tests.csv         ledger of every test tried
   scripts/  outputs/  data/
 ```

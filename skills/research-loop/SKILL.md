@@ -28,8 +28,54 @@ standards, those override the defaults here.
 - **Either way:** write the study's absolute path (one line) to `.claude/active-study` in the
   project root. The post-compaction hook reads it to put the study state back into context.
 - Check the project's notes, `CLAUDE.md` and memory for known defects in the data you'll touch.
+- **Resuming a study with no `LITERATURE.md`:** copy it from the template and do the
+  section 1 scan before the next experiment is pre-registered.
 
-## 1. Audit the data (always, before any modelling)
+## 1. Scan the literature (required, quick, before choosing methods)
+
+Methods should have a visible lineage. Before the first pre-registration, run a short,
+surface-level scan. This is not a systematic review: it should take about 15–30 minutes
+and 5–15 sources.
+
+**Look for:**
+
+- one or two recent reviews of the question, measurement or system under study
+- the 3–5 studies closest to this one: same kind of data, similar setting, similar question
+- the standard method for this kind of question, and its usual validation scheme
+- reported pitfalls and confounds, which feed the audit (section 2) and the controls list
+- typical effect sizes or accuracies, as a plausibility check for later results
+
+**How:** use web search, then fetch abstracts, DOIs or open-access copies. Under the
+context-hygiene rule (section 5), the scan can go to a subagent that returns the filled-in
+`LITERATURE.md` content. If a paper is paywalled, work from the abstract and say so.
+
+**Only cite what you actually retrieved.** Every entry needs a working DOI or URL that you
+opened in this session. Never write a citation from memory. If you recall a relevant paper
+but can't find it, list it under "Couldn't verify", not as a source.
+
+**Record it in `LITERATURE.md`** (template sections): sources (citation, DOI/URL, method,
+finding, relevance), the standard approach, reported pitfalls, typical effect sizes, gaps,
+and the departures from the standard and why. Log one line in `RESEARCH_LOG.md` saying the
+scan was done, with the number of sources.
+
+**The literature informs; it doesn't bind.** The point is that methods don't come from
+nowhere. Copying what's been done is not the goal. You may use a method the literature
+doesn't, when there is a reason: a better-suited model, a stronger validation scheme, a
+defect in these data that the standard method can't handle, or a known weakness of the
+standard approach. When you depart:
+
+- say why in the pre-registration's `Precedent:` line and under "Departures" in
+  `LITERATURE.md`
+- where it's cheap, also run the standard method as a **literature baseline**. The new
+  method has to beat it, the same as any other baseline. If it doesn't, that is a result.
+- a method with no precedent is fine. A method with no stated reason is not.
+
+Don't let the scan grow into a review. Once you can name the standard approach, its main
+pitfalls and the closest studies, stop. Go back to the literature only when a result looks
+surprising (check whether it has been reported before) or when a new method is chosen
+mid-study (scan for that method).
+
+## 2. Audit the data (always, before any modelling)
 
 Write `scripts/00_audit.py` (or `.R`) and log what it finds. Check at least:
 
@@ -42,7 +88,7 @@ Write `scripts/00_audit.py` (or `.R`) and log what it finds. Check at least:
 
 A defect found here is a result. Record it in FINDINGS.md under "Data defects".
 
-## 2. Pre-register, then run
+## 3. Pre-register, then run
 
 For each experiment, **write a log entry before running it**:
 
@@ -51,13 +97,14 @@ For each experiment, **write a log entry before running it**:
 Hypothesis:
 Test / metric:
 Method: <model/test> via <package>.<function>(<key args>); <language>
+Precedent: <LITERATURE.md source(s) using this or a similar method> | departure: <why>
 Baseline(s) it must beat:
 Controls:
 Would be falsified by:
 ```
 
 At the same time, add one row per test to `tests.csv` with `outcome` set to `pending`.
-Robustness variants and attacks (section 3) get their own rows too. The ledger, not your
+Robustness variants and attacks (section 4) get their own rows too. The ledger, not your
 memory, is the count of tests tried.
 
 Then run it with a numbered script in `scripts/`, outputs in `outputs/E<n>/`, and append
@@ -98,7 +145,8 @@ Where it goes:
    Note every deviation from the pre-registered method and why.
 3. **`METHODS.md`**: one paper-style subsection per experiment (past tense, prose, every
    item above), plus the shared preprocessing. Update it whenever a result entry is written.
-   It should be ready to adapt into a paper's methods section.
+   It should be ready to adapt into a paper's methods section. Cite the precedent for
+   each method from `LITERATURE.md`, or give the reason for the departure.
 4. **Software versions**: each script writes `outputs/E<n>/session_info.txt` with the
    interpreter version and the versions of the packages it imports (Python:
    `sys.version` + `importlib.metadata.version(pkg)`; R: `sessionInfo()`). Copy the versions
@@ -109,19 +157,21 @@ Where it goes:
 **Required controls** (use all that apply, and say why when one doesn't):
 
 - a trivial baseline: climatology/season-only, group mean, persistence, nearest neighbour
+- the literature baseline (the standard method from section 1), when you depart from it
 - a null: a permutation or shuffled-label test, or a synthetic null
 - a holdout that respects structure: leave-one-site/subject/scene/year-out, not random rows
 - an effective-n check (autocorrelation, shared-date or shared-batch effects)
 - a known-confound check (whatever is known to drive the outcome in this field)
 
-## 3. Try to break it
+## 4. Try to break it
 
 Before calling anything a result, attack it:
 
 - Does it survive a different but defensible choice of threshold, window, or outlier rule?
 - Is it driven by one site, subject, date or batch? Drop each in turn.
 - Does the baseline or the null explain it?
-- Is it physically or mechanistically plausible in sign and size?
+- Is it physically or mechanistically plausible in sign and size? Is it far outside the
+  effect sizes in `LITERATURE.md`? If so, suspect a bug before claiming a discovery.
 
 Log the attack and its outcome. A result that only survives one analysis path is a **lead**.
 
@@ -139,12 +189,12 @@ with the suggested wording adopted) lets a claim into the **Results** section. R
 skeptic once per claim, and again if the claim changes substantially. It doesn't need to
 review nulls.
 
-## 4. Iterate, hand off, or stop
+## 5. Iterate, hand off, or stop
 
 After each experiment, decide the next most informative one and write the reason in the log.
 
 **Session budget.** Long sessions degrade (context rot). The files are the memory, so
-sessions are disposable. End the session with a full section 5 report, with `STATUS: CONTINUE`
+sessions are disposable. End the session with a full section 6 report, with `STATUS: CONTINUE`
 in `Next`, when any of these happens:
 
 - you've finished 2 experiments in this session (or 1 if told to in the prompt)
@@ -177,7 +227,7 @@ research question, anything needing field or domain knowledge you can't get from
 spending money or quota, deleting anything outside the study folder, sharing anything
 externally, and final interpretation for publication.
 
-## 5. Report (every session end, not just the final one)
+## 6. Report (every session end, not just the final one)
 
 1. Update `FINDINGS.md`:
    - **Answer**, in one paragraph
@@ -191,6 +241,8 @@ externally, and final interpretation for publication.
    - each Result and Lead names its method in short form (model, package, CV/uncertainty
      scheme) and points to its `METHODS.md` subsection
    - check that `METHODS.md` covers every experiment with a result entry
+   - under **Caveats**, any result that goes against the literature, and any departure
+     from the standard method that wasn't tested against the literature baseline
 2. Rewrite `RESEARCH_LOG.md` `Next` so a cold session can resume from it alone. It replaces
    the previous `Next`; the dated entries below it stay append-only. Use the template fields:
    `STATUS:` line first (`CONTINUE`, `STOP`, or `BLOCKED`), then current state, ruled out,
@@ -211,3 +263,5 @@ externally, and final interpretation for publication.
 - quietly drop an experiment that failed
 - present a lead as a finding
 - report a number without its method in reproducible detail (package, function, settings, seed)
+- pre-register the first experiment before the literature scan is done
+- cite a paper you didn't retrieve and open in this session
